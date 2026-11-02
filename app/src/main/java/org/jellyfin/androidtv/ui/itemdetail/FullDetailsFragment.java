@@ -48,6 +48,7 @@ import org.jellyfin.androidtv.data.repository.CustomMessageRepository;
 import org.jellyfin.androidtv.data.service.BackgroundService;
 import org.jellyfin.androidtv.databinding.FragmentFullDetailsBinding;
 import org.jellyfin.androidtv.preference.UserPreferences;
+import org.jellyfin.androidtv.preference.constant.VideoAudioOutput;
 import org.jellyfin.androidtv.preference.constant.ClockBehavior;
 import org.jellyfin.androidtv.ui.InteractionTrackerViewModel;
 import org.jellyfin.androidtv.ui.RecordPopup;
@@ -763,6 +764,21 @@ public class FullDetailsFragment extends Fragment implements RecordingIndicatorV
     TextUnderButton playButton = null;
     TextUnderButton trailerButton = null;
 
+    // Fork: toggle between the system audio output and the TV for video playback
+    private void addVideoAudioOutputButton(BaseItemDto item, int buttonSize) {
+        BaseItemKind type = item.getType();
+        if (type != BaseItemKind.MOVIE && type != BaseItemKind.EPISODE && type != BaseItemKind.SERIES && type != BaseItemKind.VIDEO) return;
+
+        UserPreferences preferences = userPreferences.getValue();
+        TextUnderButton[] button = new TextUnderButton[1];
+        button[0] = TextUnderButton.create(requireContext(), R.drawable.ic_select_audio, buttonSize, 0, getString(preferences.get(UserPreferences.Companion.getVideoAudioOutput()).getNameRes()), v -> {
+            VideoAudioOutput next = preferences.get(UserPreferences.Companion.getVideoAudioOutput()) == VideoAudioOutput.TV ? VideoAudioOutput.AUTO : VideoAudioOutput.TV;
+            preferences.set(UserPreferences.Companion.getVideoAudioOutput(), next);
+            button[0].setLabel(getString(next.getNameRes()));
+        });
+        mDetailsOverviewRow.addAction(button[0]);
+    }
+
     private void addButtons(int buttonSize) {
         BaseItemDto baseItem = mBaseItem;
         String buttonLabel;
@@ -794,6 +810,7 @@ public class FullDetailsFragment extends Fragment implements RecordingIndicatorV
                 }
             });
             mDetailsOverviewRow.addAction(playButton);
+            addVideoAudioOutputButton(baseItem, buttonSize);
 
             if (isSeries && !isStarted) {
                 FullDetailsFragmentHelperKt.getNextUpEpisode(this, nextUpEpisode -> {
