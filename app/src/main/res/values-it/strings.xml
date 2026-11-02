@@ -160,6 +160,8 @@
     <string name="lbl_play_first_unwatched">Guarda il primo non visto</string>
     <string name="lbl_search_hint">Cerca testo (seleziona per utilizzare la tastiera)</string>
     <string name="lbl_play_trailers">Riproduci trailer</string>
+    <string name="video_audio_output_auto">Audio: Automatico</string>
+    <string name="video_audio_output_tv">Audio: TV</string>
     <string name="pref_authentication_cat">Autenticazione</string>
     <string name="lbl_show_premieres">Mostra le anteprime di stagione</string>
     <string name="lbl_refresh_switching">Cambio frequenza di aggiornamento</string>

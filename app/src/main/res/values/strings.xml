@@ -81,6 +81,8 @@
     <string name="lbl_bracket_unknown">Unknown</string>
     <string name="lbl_trailer">"Trailer "</string>
     <string name="lbl_play_trailers">Play trailer(s)</string>
+    <string name="video_audio_output_auto">Audio: Automatic</string>
+    <string name="video_audio_output_tv">Audio: TV</string>
     <string name="lbl_no">No</string>
     <string name="lbl_yes">Yes</string>
     <string name="lbl_enter_server_address">Enter server address</string>

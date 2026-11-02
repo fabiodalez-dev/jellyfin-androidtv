@@ -15,6 +15,7 @@ import org.jellyfin.androidtv.preference.constant.HdrOverrideMode
 import org.jellyfin.androidtv.preference.constant.NextUpBehavior
 import org.jellyfin.androidtv.preference.constant.RefreshRateSwitchingBehavior
 import org.jellyfin.androidtv.preference.constant.StillWatchingBehavior
+import org.jellyfin.androidtv.preference.constant.VideoAudioOutput
 import org.jellyfin.androidtv.preference.constant.WatchedIndicatorBehavior
 import org.jellyfin.androidtv.preference.constant.ZoomMode
 import org.jellyfin.androidtv.ui.playback.segment.MediaSegmentAction
@@ -153,6 +154,11 @@ class UserPreferences(context: Context) : SharedPreferenceStore(
 		 * TrueHD bitstream device profile override.
 		 */
 		var bitstreamTrueHd = enumPreference("bitstream_truehd_mode", BitstreamAudioMode.AUTO)
+
+		/**
+		 * Audio output for video playback: follow the system or force the TV output.
+		 */
+		var videoAudioOutput = enumPreference("video_audio_output", VideoAudioOutput.AUTO)
 
 		/**
 		 * HDR10 device profile override.
