@@ -20,7 +20,7 @@ Nella schermata di dettaglio di un film (e di un episodio, che usa la stessa sch
 
 La scelta è **ricordata**: vale per tutti i video riprodotti dopo, finché Fabio non la cambia, anche se il video viene avviato senza passare dalla schermata di dettaglio (per esempio da "Continua a guardare" in home).
 
-- **TV**: il player video chiede a ExoPlayer di suonare sull'uscita verso la TV. Ordine di ricerca tra le uscite disponibili all'avvio della riproduzione: `TYPE_HDMI`, poi `TYPE_HDMI_ARC` / `TYPE_HDMI_EARC`, poi `TYPE_BUILTIN_SPEAKER`. Se nessuna è presente, nessuna preferenza (il video suona dove suonerebbe comunque).
+- **TV**: il player video chiede a ExoPlayer di suonare sull'uscita verso la TV. Ordine di ricerca tra le uscite disponibili: `TYPE_BUILTIN_SPEAKER`, poi `TYPE_HDMI`, `TYPE_HDMI_ARC`, `TYPE_HDMI_EARC`. Aggiornamento dopo la verifica sul dispositivo: sul Chromecast l'uscita HDMI (che a volte compare tra le uscite) viene registrata come preferita ma Android resta sulla cassa Bluetooth, mentre lo speaker "Chromecast" è la TV e viene rispettato. Se nessuna è presente, nessuna preferenza (il video suona dove suonerebbe comunque).
 - **Automatico** (predefinito, comportamento attuale): nessuna preferenza, l'audio segue il sistema, quindi la cassa Bluetooth se è connessa.
 
 Fuori dal video di Jellyfin non cambia niente: la musica di Jellyfin, Bloomee TV e tutte le altre app continuano a seguire il routing di sistema. Nessuna impostazione di sistema viene modificata, quindi non c'è niente da ripristinare.
@@ -35,7 +35,7 @@ Fuori dal video di Jellyfin non cambia niente: la musica di Jellyfin, Bloomee TV
 ## Non obiettivi
 
 - Scegliere tra più dispositivi Bluetooth o scegliere la cassa come destinazione esplicita: "Automatico" basta.
-- Cambiare l'uscita a film iniziato dal menu del player.
+- (Superato: Fabio lo ha chiesto dopo la prima prova. Il player ha ora un pulsante "Uscita audio" che cambia la scelta e la applica subito al film in corso.)
 - Toccare la musica di Jellyfin o il nuovo motore di riproduzione (`playback/media3/exoplayer/ExoPlayerBackend.kt`), che oggi su 0.20 serve la musica; per il video è attivo solo se l'opzione sperimentale `playback_new` è accesa (spenta di default).
 - Instradamento di sistema, servizi con permessi della shell, overlay: scartati in questa conversazione perché la scelta dentro Jellyfin basta.
 - Proporre la funzione upstream (possibile in futuro, non fa parte di questo lavoro).
