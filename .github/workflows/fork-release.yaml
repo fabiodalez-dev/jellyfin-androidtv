@@ -114,6 +114,7 @@ jobs:
           prerelease=""
           case "$TAG" in *-*) prerelease="--prerelease" ;; esac
           gh release create "fork-$TAG" app/build/outputs/apk/release/*-release.apk \
+            -R "$GITHUB_REPOSITORY" \
             --target "build/$TAG" \
             --title "Jellyfin Audio TV ${TAG#v}" \
             --notes "Jellyfin Android TV $TAG with the \"Audio: TV / Automatic\" button on the movie and episode screen. See FORK.md." \
