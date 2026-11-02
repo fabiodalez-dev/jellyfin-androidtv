@@ -9,6 +9,7 @@ import org.jellyfin.androidtv.preference.constant.BitstreamAudioFormat
 import org.jellyfin.androidtv.preference.constant.BitstreamAudioMode
 import org.jellyfin.androidtv.preference.constant.HdrFormat
 import org.jellyfin.androidtv.preference.constant.HdrOverrideMode
+import org.jellyfin.androidtv.util.audio.preferredVideoAudioDevice
 import org.jellyfin.androidtv.util.profile.codec.isPassthroughAudioAvailable
 import org.jellyfin.sdk.model.ServerVersion
 import org.jellyfin.sdk.model.api.CodecType
@@ -85,7 +86,7 @@ private fun UserPreferences.getHdrRangeTypesFor(mode: HdrOverrideMode): Set<Vide
 
 private fun UserPreferences.isBitstreamAudioEnabled(context: Context, format: BitstreamAudioFormat): Boolean =
 	when (this[format.preference]) {
-		BitstreamAudioMode.AUTO -> isPassthroughAudioAvailable(context, format.mimeType)
+		BitstreamAudioMode.AUTO -> isPassthroughAudioAvailable(context, format.mimeType, preferredVideoAudioDevice(context))
 		BitstreamAudioMode.ENABLE -> true
 		BitstreamAudioMode.DISABLE -> false
 	}

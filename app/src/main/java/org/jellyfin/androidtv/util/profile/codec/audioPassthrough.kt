@@ -1,6 +1,7 @@
 package org.jellyfin.androidtv.util.profile.codec
 
 import android.content.Context
+import android.media.AudioDeviceInfo
 import android.media.AudioFormat
 import androidx.annotation.OptIn
 import androidx.media3.common.AudioAttributes
@@ -10,7 +11,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.audio.AudioCapabilities
 
 @OptIn(UnstableApi::class)
-fun isPassthroughAudioAvailable(context: Context, mimetype: String): Boolean {
+fun isPassthroughAudioAvailable(context: Context, mimetype: String, routedDevice: AudioDeviceInfo? = null): Boolean {
 	val attributes = AudioAttributes.Builder()
 		.setUsage(C.USAGE_MEDIA)
 		.setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
@@ -19,7 +20,7 @@ fun isPassthroughAudioAvailable(context: Context, mimetype: String): Boolean {
 	val capabilities = AudioCapabilities.getCapabilities(
 		context,
 		attributes,
-		null,
+		routedDevice,
 		listOf(AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.CHANNEL_OUT_5POINT1)
 	)
 
