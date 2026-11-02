@@ -8,14 +8,14 @@ import org.jellyfin.androidtv.preference.UserPreferences
 import org.jellyfin.androidtv.preference.constant.VideoAudioOutput
 
 /**
- * Output types that reach the TV, best first. Some devices (Chromecast with Google TV) expose no
- * HDMI device to apps and route their built-in "speaker" output to the TV instead.
+ * Output types that reach the TV, best first. On the Chromecast with Google TV the built-in "speaker"
+ * output is the TV and is honoured with a Bluetooth speaker connected, while the HDMI device is not.
  */
 private val tvOutputTypes = listOf(
+	AudioDeviceInfo.TYPE_BUILTIN_SPEAKER,
 	AudioDeviceInfo.TYPE_HDMI,
 	AudioDeviceInfo.TYPE_HDMI_ARC,
 	AudioDeviceInfo.TYPE_HDMI_EARC,
-	AudioDeviceInfo.TYPE_BUILTIN_SPEAKER,
 )
 
 /**

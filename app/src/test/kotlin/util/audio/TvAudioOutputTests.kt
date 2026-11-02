@@ -14,17 +14,14 @@ class TvAudioOutputTests : FunSpec({
 
 	fun pick(vararg types: Int) = pickTvAudioOutput(types.toList()) { it }
 
-	test("pickTvAudioOutput prefers HDMI over speaker") {
-		pick(speaker, a2dp, hdmi) shouldBe hdmi
+	test("pickTvAudioOutput prefers the built-in speaker output over HDMI") {
+		pick(hdmi, a2dp, speaker) shouldBe speaker
 	}
 
-	test("pickTvAudioOutput falls back to HDMI ARC then eARC before speaker") {
-		pick(speaker, hdmiEarc, a2dp) shouldBe hdmiEarc
-		pick(speaker, hdmiArc, hdmiEarc) shouldBe hdmiArc
-	}
-
-	test("pickTvAudioOutput uses the Chromecast speaker output when no HDMI is exposed") {
-		pick(speaker, a2dp) shouldBe speaker
+	test("pickTvAudioOutput falls back to HDMI, then ARC, then eARC") {
+		pick(a2dp, hdmiEarc, hdmi) shouldBe hdmi
+		pick(hdmiEarc, hdmiArc, a2dp) shouldBe hdmiArc
+		pick(a2dp, hdmiEarc) shouldBe hdmiEarc
 	}
 
 	test("pickTvAudioOutput returns null when no tv-capable output") {
