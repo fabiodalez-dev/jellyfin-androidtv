@@ -43,6 +43,7 @@ import org.jellyfin.androidtv.ui.playback.overlay.action.SelectQualityAction;
 import org.jellyfin.androidtv.ui.playback.overlay.action.SkipNextAction;
 import org.jellyfin.androidtv.ui.playback.overlay.action.SkipPreviousAction;
 import org.jellyfin.androidtv.ui.playback.overlay.action.ZoomAction;
+import org.jellyfin.androidtv.ui.playback.overlay.action.AudioOutputAction;
 import org.jellyfin.androidtv.util.DateTimeExtensionsKt;
 import org.koin.java.KoinJavaComponent;
 
@@ -62,6 +63,7 @@ public class CustomPlaybackTransportControlGlue extends PlaybackTransportControl
     private SelectQualityAction selectQualityAction;
     private PlaybackSpeedAction playbackSpeedAction;
     private ZoomAction zoomAction;
+    private AudioOutputAction audioOutputAction;
     private ChapterAction chapterAction;
 
     // TV actions
@@ -114,6 +116,7 @@ public class CustomPlaybackTransportControlGlue extends PlaybackTransportControl
         selectAudioAction.dismissPopup();
         selectQualityAction.dismissPopup();
         zoomAction.dismissPopup();
+        audioOutputAction.dismissPopup();
 
         super.onDetachedFromHost();
     }
@@ -202,6 +205,8 @@ public class CustomPlaybackTransportControlGlue extends PlaybackTransportControl
         playbackSpeedAction.setLabels(new String[]{context.getString(R.string.lbl_playback_speed)});
         zoomAction = new ZoomAction(context, this);
         zoomAction.setLabels(new String[]{context.getString(R.string.lbl_zoom)});
+        audioOutputAction = new AudioOutputAction(context, this, KoinJavaComponent.get(UserPreferences.class));
+        audioOutputAction.setLabels(new String[]{context.getString(R.string.lbl_audio_output)});
         chapterAction = new ChapterAction(context, this);
         chapterAction.setLabels(new String[]{context.getString(R.string.lbl_chapters)});
 
@@ -250,6 +255,8 @@ public class CustomPlaybackTransportControlGlue extends PlaybackTransportControl
         if (playerAdapter.hasMultiAudio()) {
             primaryActionsAdapter.add(selectAudioAction);
         }
+
+        primaryActionsAdapter.add(audioOutputAction);
 
         if (playerAdapter.isLiveTv()) {
             primaryActionsAdapter.add(channelBarChannelAction);

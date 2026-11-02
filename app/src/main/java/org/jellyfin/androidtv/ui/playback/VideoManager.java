@@ -94,6 +94,11 @@ public class VideoManager {
     private final UserPreferences userPreferences = KoinJavaComponent.get(UserPreferences.class);
     private final HttpDataSource.Factory exoPlayerHttpDataSourceFactory = KoinJavaComponent.get(HttpDataSource.Factory.class);
 
+    // Fork: send video audio to the TV when asked, even with a Bluetooth speaker connected
+    public void applyVideoAudioOutput() {
+        mExoPlayer.setPreferredAudioDevice(TvAudioOutputKt.preferredVideoAudioDevice(userPreferences, mActivity));
+    }
+
     public VideoManager(@NonNull Activity activity, @NonNull View view, @NonNull PlaybackOverlayFragmentHelper helper) {
         mActivity = activity;
         _helper = helper;
@@ -103,8 +108,7 @@ public class VideoManager {
         AssHandler assHandler = assDirectPlay ? new AssHandler(AssRenderType.OVERLAY_OPEN_GL, new AssHandlerConfig()) : null;
 
         mExoPlayer = configureExoplayerBuilder(activity, assHandler).build();
-        // Fork: send video audio to the TV when asked, even with a Bluetooth speaker connected
-        mExoPlayer.setPreferredAudioDevice(TvAudioOutputKt.preferredVideoAudioDevice(userPreferences, activity));
+        applyVideoAudioOutput();
 
         if (userPreferences.get(UserPreferences.Companion.getDebuggingEnabled())) {
             mExoPlayer.addAnalyticsListener(new EventLogger());

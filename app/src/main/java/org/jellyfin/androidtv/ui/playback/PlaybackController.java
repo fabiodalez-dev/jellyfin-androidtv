@@ -1351,6 +1351,12 @@ public class PlaybackController implements PlaybackControllerNotifiable {
             mVideoManager.setZoom(mode);
     }
 
+    // Fork: re-route the playing video after the audio output preference changed
+    public void applyVideoAudioOutput() {
+        if (hasInitializedVideoManager())
+            mVideoManager.applyVideoAudioOutput();
+    }
+
     /**
      * List of various states that we can be in
      */
