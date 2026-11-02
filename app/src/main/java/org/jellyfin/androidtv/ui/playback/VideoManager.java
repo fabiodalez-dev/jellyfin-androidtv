@@ -51,6 +51,7 @@ import org.jellyfin.androidtv.data.compat.StreamInfo;
 import org.jellyfin.androidtv.preference.UserPreferences;
 import org.jellyfin.androidtv.preference.constant.BufferLength;
 import org.jellyfin.androidtv.preference.constant.ZoomMode;
+import org.jellyfin.androidtv.util.audio.TvAudioOutputKt;
 import org.jellyfin.sdk.api.client.ApiClient;
 import org.jellyfin.sdk.model.api.MediaStream;
 import org.jellyfin.sdk.model.api.MediaStreamType;
@@ -102,6 +103,8 @@ public class VideoManager {
         AssHandler assHandler = assDirectPlay ? new AssHandler(AssRenderType.OVERLAY_OPEN_GL, new AssHandlerConfig()) : null;
 
         mExoPlayer = configureExoplayerBuilder(activity, assHandler).build();
+        // Fork: send video audio to the TV when asked, even with a Bluetooth speaker connected
+        mExoPlayer.setPreferredAudioDevice(TvAudioOutputKt.preferredVideoAudioDevice(userPreferences, activity));
 
         if (userPreferences.get(UserPreferences.Companion.getDebuggingEnabled())) {
             mExoPlayer.addAnalyticsListener(new EventLogger());
